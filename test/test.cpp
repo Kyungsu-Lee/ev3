@@ -39,14 +39,5 @@ int main ()
 	a.set_speed_sp(-300);
 	a.run_to_rel_pos();	
 
-	for(int i=0; i<location.size(); i++)
-	{
-		a.set_position_sp(location[i]).set_speed_sp(300);
-		a.run_to_rel_pos();
-		b.set_time_sp(1000).set_speed_sp(300).run_time();
-		std::this_thread::sleep_for(std::chrono::milliseconds(500));
-		b.set_time_sp(1000).set_speed_sp(-300).run_time();
-		a.set_position_sp(0).set_speed_sp(-300).a.run_to_abs_pos();
-	}
 }
 
