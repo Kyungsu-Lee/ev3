@@ -3,6 +3,7 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include <vector>
 #include <stdexcept>
 
 #include "ev3dev.h"
@@ -18,31 +19,34 @@ int main ()
 	sensor p = {INPUT_1};
 	sensor q = {INPUT_2};
 
-	bool down = false;
-	bool up = false;
-	bool right = false;
-	bool left = false;
-	bool enter = false;
-	bool escape = false;
-
 	int speed = 300;
-
-	bool flag = true;
-
+	int index = 0;
 	int time = 0;
 
-	while(escape == 0)
+	vector<int> location;
+
+	a.set_position_sp(900);
+	a.set_speed_sp(300);
+	a.run_to_rel_pos();
+
+	while(a.get_position() != 900)
 	{
-		a.set_time_sp(500).set_speed_sp(-300).run_timed();
-		std::this_thread::sleep_for(std::chrono::milliseconds(500));
-		a.set_time_sp(500).set_speed_sp(300).run_timed();
-		std::this_thread::sleep_for(std::chrono::milliseconds(500));
-		b.set_time_sp(500).set_speed_sp(300).run_timed();
-		std::this_thread::sleep_for(std::chrono::milliseconds(500));
-		b.set_time_sp(500).set_speed_sp(-300).run_timed();
+		if(q.getValue() == 1)
+			vector.push_bacl(a.get_position());
 	}
 
+	a.set_position_sp(0);
+	a.set_speed_sp(-300);
+	a.run_to_rel_pos();	
 
-	c.stop();
+	for(int i=0; i<location.size(); i++)
+	{
+		a.set_position_sp(location[i]).set_speed_sp(300);
+		a.run_to_rel_pos();
+		b.set_time_sp(1000).set_speed_sp(300).run_time();
+		std::this_thread::sleep_for(std::chrono::milliseconds(500));
+		b.set_time_sp(1000).set_speed_sp(-300).run_time();
+		a.set_position_sp(0).set_speed_sp(-300).a.run_to_abs_pos();
+	}
 }
 
